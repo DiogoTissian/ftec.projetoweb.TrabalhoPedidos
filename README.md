@@ -1,0 +1,1 @@
+# ftec.projetoweb.TrabalhoPedidos.sln
