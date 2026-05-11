@@ -28,7 +28,7 @@ API construída em C# com o framework .NET Core
 | PedidoId | Guid | Id do pedido em que ele pertence |
 | ProdutoId | Guid | Id do produto na tabela de produtos (consulta microsserviço) |
 | Quantidade | int | Quantidade escolhida para o produto |
-| Valor | decimal | Valor do produto unitário (consulta em microsserviço) |
+| Preco | decimal | Valor do produto unitário (consulta em microsserviço) |
 
 ### Endpoints
 - GET - api/Pedido - Lista todos os pedidos salvos no banco de dados
@@ -45,14 +45,14 @@ Resposta:
         "pedidoId": "1b456668-80ed-4000-b7a2-d201fd677af8",
         "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "quantidade": 2,
-        "valor": 100
+        "preco": 100
       },
       {
         "id": "a970f96f-a87e-48ba-9367-274dca9beb5e",
         "pedidoId": "1b456668-80ed-4000-b7a2-d201fd677af8",
         "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "quantidade": 4,
-        "valor": 50
+        "preco": 50
       }
     ],
     "dataPedido": "2026-05-11T00:00:00",
@@ -75,7 +75,7 @@ Resposta:
       "pedidoId": "d4e24e9f-5a95-4054-b690-6fbbef901fa7",
       "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66a775",
       "quantidade": 2,
-      "valor": 10
+      "preco": 10
     }
   ],
   "dataPedido": "2026-05-11T00:00:00",
@@ -98,14 +98,14 @@ Resposta:
         "pedidoId": "1b456668-80ed-4000-b7a2-d201fd677af8",
         "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "quantidade": 2,
-        "valor": 10
+        "preco": 10
       },
       {
         "id": "a970f96f-a87e-48ba-9367-274dca9beb5e",
         "pedidoId": "1b456668-80ed-4000-b7a2-d201fd677af8",
         "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "quantidade": 4,
-        "valor": 5
+        "preco": 5
       }
     ],
     "dataPedido": "2026-05-11T00:00:00",
@@ -121,7 +121,7 @@ Resposta:
         "pedidoId": "6a65417d-4455-4be9-903d-4e5d8e58d95d",
         "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66a775",
         "quantidade": 100,
-        "valor": 1
+        "preco": 1
       }
     ],
     "dataPedido": "2026-05-11T00:00:00",
