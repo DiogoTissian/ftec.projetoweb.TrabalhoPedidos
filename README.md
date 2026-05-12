@@ -29,6 +29,7 @@ API construída em C# com o framework .NET Core
 | ProdutoId | Guid | Id do produto na tabela de produtos (consulta microsserviço) |
 | Quantidade | int | Quantidade escolhida para o produto |
 | Preco | decimal | Valor do produto unitário (consulta em microsserviço) |
+| Disponivel | bool | Indica se o produto está disponível para compra ou não |
 
 ### Endpoints
 - GET - api/Pedido - Lista todos os pedidos salvos no banco de dados
