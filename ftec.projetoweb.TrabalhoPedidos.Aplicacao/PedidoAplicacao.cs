@@ -99,6 +99,32 @@ namespace ftec.projetoweb.TrabalhoPedidos.Aplicacao
             }
         }
 
+        public void AtualizarStatusPedido(AtualizacaoPedidoDTO atualizacaoPedidoDTO)
+        {
+            try
+            {
+                AtualizacaoPedido atualizacaoPedido = AtualizacaoPedidoAdapter.AtualizacaoPedidoDTOTOAtualizacaoPedido(atualizacaoPedidoDTO);
+                pedidoRepositorio.AtualizarStatusPedido(atualizacaoPedido);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public void AtualizarEnderecoEntregaPedido(AtualizarEnderecoPedidoDTO atualizarEnderecoPedidoDTO)
+        {
+            try
+            {
+                AtualizarEnderecoPedido atualizarEnderecoPedido = AtualizarEnderecoPedidoAdapter.AtualizarEnderecoPedidoDTOTOAtualizarEnderecoPedido(atualizarEnderecoPedidoDTO);
+                pedidoRepositorio.AtualizarEnderecoEntregaPedido(atualizarEnderecoPedido);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public void ExcluirPedido(Guid pedidoId)
         {
             try
@@ -116,6 +142,18 @@ namespace ftec.projetoweb.TrabalhoPedidos.Aplicacao
             try
             {
                 pedidoRepositorio.ExcluirPedidos(usuarioid);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public void DeleteProdutoPedido(Guid pedidoId, Guid produtoId)
+        {
+            try
+            {
+                pedidoRepositorio.DeleteProdutoPedido(pedidoId, produtoId);
             }
             catch (Exception)
             {

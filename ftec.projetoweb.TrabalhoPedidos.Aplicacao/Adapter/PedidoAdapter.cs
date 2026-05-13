@@ -14,6 +14,8 @@ namespace ftec.projetoweb.TrabalhoPedidos.Aplicacao.Adapter
             pedidoDTO.ProdutosDTO = ProdutoAdapter.ProdutoTOProdutoDTO(pedido.Produtos, pedido.Id);
             pedidoDTO.DataPedido = pedido.DataPedido;
             pedidoDTO.StatusPedido = pedido.StatusPedido;
+            pedidoDTO.CEPEnderecoEntrega = pedido.CEPEnderecoEntrega;
+            pedidoDTO.NumeroEnderecoEntrega = pedido.NumeroEnderecoEntrega;
 
             return pedidoDTO;
         }
@@ -30,7 +32,9 @@ namespace ftec.projetoweb.TrabalhoPedidos.Aplicacao.Adapter
                     UsuarioId = pedido.UsuarioId,
                     ProdutosDTO = ProdutoAdapter.ProdutoTOProdutoDTO(pedido.Produtos, pedido.Id),
                     DataPedido = pedido.DataPedido,
-                    StatusPedido = pedido.StatusPedido
+                    StatusPedido = pedido.StatusPedido,
+                    CEPEnderecoEntrega = pedido.CEPEnderecoEntrega,
+                    NumeroEnderecoEntrega = pedido.NumeroEnderecoEntrega
                 });
             }
 
@@ -46,6 +50,8 @@ namespace ftec.projetoweb.TrabalhoPedidos.Aplicacao.Adapter
             pedido.Produtos = ProdutoAdapter.ProdutoDTOTOProduto(pedidoDTO.ProdutosDTO, pedidoDTO.Id);
             pedido.DataPedido = pedidoDTO.DataPedido;
             pedido.StatusPedido = pedidoDTO.StatusPedido;
+            pedido.CEPEnderecoEntrega = pedidoDTO.CEPEnderecoEntrega;
+            pedido.NumeroEnderecoEntrega = pedidoDTO.NumeroEnderecoEntrega;
 
             return pedido;
         }
@@ -62,7 +68,9 @@ namespace ftec.projetoweb.TrabalhoPedidos.Aplicacao.Adapter
                     UsuarioId = pedidoDTO.UsuarioId,
                     Produtos = ProdutoAdapter.ProdutoDTOTOProduto(pedidoDTO.ProdutosDTO, pedidoDTO.Id),
                     DataPedido = pedidoDTO.DataPedido,
-                    StatusPedido = pedidoDTO.StatusPedido
+                    StatusPedido = pedidoDTO.StatusPedido,
+                    CEPEnderecoEntrega = pedidoDTO.CEPEnderecoEntrega,
+                    NumeroEnderecoEntrega = pedidoDTO.NumeroEnderecoEntrega
                 });
             }
 

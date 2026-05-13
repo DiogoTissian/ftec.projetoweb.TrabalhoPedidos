@@ -11,8 +11,11 @@ namespace ftec.projetoweb.TrabalhoPedidos.Dominio.Interfaces
     {
         void Inserir(Pedido pedido);
         void Alterar(Pedido pedido);
+        void AtualizarStatusPedido(AtualizacaoPedido atualizacaoPedido);
+        void AtualizarEnderecoEntregaPedido(AtualizarEnderecoPedido atualizarEnderecoPedido);
         void Ecluir(Guid Id);
         void ExcluirPedidos(Guid usuarioid);
+        void DeleteProdutoPedido(Guid pedidoId, Guid produtoId);
         Pedido Procurar(Guid Id);
         List<Pedido> ProcurarTodos();
         List<Pedido> BuscarPedidosUsuario(Guid usuarioId);

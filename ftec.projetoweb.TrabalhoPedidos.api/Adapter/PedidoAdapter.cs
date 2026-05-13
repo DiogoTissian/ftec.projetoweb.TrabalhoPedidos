@@ -18,7 +18,9 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Adapter
                         UsuarioId = pedidoDTO.UsuarioId,
                         ProdutosModel = ProdutoAdapter.ProdutoDTOTOProdutoModel(pedidoDTO.ProdutosDTO, pedidoDTO.Id),
                         DataPedido = pedidoDTO.DataPedido,
-                        StatusPedido = pedidoDTO.StatusPedido
+                        StatusPedido = pedidoDTO.StatusPedido,
+                        CEPEnderecoEntrega = pedidoDTO.CEPEnderecoEntrega,
+                        NumeroEnderecoEntrega = pedidoDTO.NumeroEnderecoEntrega
                     }
                 );
             }
@@ -35,6 +37,8 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Adapter
             pedidoModel.ProdutosModel = ProdutoAdapter.ProdutoDTOTOProdutoModel(pedidoDTO.ProdutosDTO, pedidoDTO.Id);
             pedidoModel.DataPedido = pedidoDTO.DataPedido;
             pedidoModel.StatusPedido = pedidoDTO.StatusPedido;
+            pedidoModel.CEPEnderecoEntrega = pedidoDTO.CEPEnderecoEntrega;
+            pedidoModel.NumeroEnderecoEntrega = pedidoDTO.NumeroEnderecoEntrega;
 
             return pedidoModel;
         }
@@ -52,7 +56,9 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Adapter
                         UsuarioId = pedidoModel.UsuarioId,
                         ProdutosDTO = ProdutoAdapter.ProdutoModelTOProdutoDTO(pedidoModel.ProdutosModel, pedidoModel.Id),
                         DataPedido = pedidoModel.DataPedido,
-                        StatusPedido = pedidoModel.StatusPedido
+                        StatusPedido = pedidoModel.StatusPedido,
+                        CEPEnderecoEntrega = pedidoModel.CEPEnderecoEntrega,
+                        NumeroEnderecoEntrega = pedidoModel.NumeroEnderecoEntrega
                     }
                 );
             }
@@ -69,6 +75,8 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Adapter
             pedidoDTO.ProdutosDTO = ProdutoAdapter.ProdutoModelTOProdutoDTO(pedidoModel.ProdutosModel, pedidoModel.Id);
             pedidoDTO.DataPedido = pedidoModel.DataPedido;
             pedidoDTO.StatusPedido = pedidoModel.StatusPedido;
+            pedidoDTO.CEPEnderecoEntrega = pedidoModel.CEPEnderecoEntrega;
+            pedidoDTO.NumeroEnderecoEntrega = pedidoModel.NumeroEnderecoEntrega;
 
             return pedidoDTO;
         }

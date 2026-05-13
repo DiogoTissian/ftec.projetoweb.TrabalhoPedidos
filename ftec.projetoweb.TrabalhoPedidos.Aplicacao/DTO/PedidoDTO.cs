@@ -15,6 +15,8 @@ namespace ftec.projetoweb.TrabalhoPedidos.Aplicacao.DTO
             this.ProdutosDTO = new List<ProdutoDTO>();
             this.DataPedido = DateTime.MinValue;
             this.StatusPedido = 0;
+            this.CEPEnderecoEntrega = string.Empty;
+            this.NumeroEnderecoEntrega = string.Empty;
         }
 
         public Guid Id { get; set; }
@@ -22,5 +24,7 @@ namespace ftec.projetoweb.TrabalhoPedidos.Aplicacao.DTO
         public List<ProdutoDTO> ProdutosDTO { get; set; }
         public DateTime DataPedido { get; set; }
         public int StatusPedido { get; set; }
+        public string CEPEnderecoEntrega { get; set; }
+        public string NumeroEnderecoEntrega { get; set; }
     }
 }

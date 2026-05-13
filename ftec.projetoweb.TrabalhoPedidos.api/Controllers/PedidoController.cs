@@ -2,8 +2,10 @@
 using ftec.projetoweb.TrabalhoPedidos.api.Models;
 using ftec.projetoweb.TrabalhoPedidos.Aplicacao;
 using ftec.projetoweb.TrabalhoPedidos.Aplicacao.DTO;
+using ftec.projetoweb.TrabalhoPedidos.Dominio.Entidades;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
 {
@@ -12,20 +14,67 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
     public class PedidoController : ControllerBase
     {
         PedidoAplicacao pedidoAplicacao;
+        string url_api_produto = string.Empty;
 
         public PedidoController(IConfiguration config)
         {
             pedidoAplicacao = new PedidoAplicacao(config["strConexao"]);
+            this.url_api_produto = config["url_api_produto"];
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
                 List<PedidoDTO> pedidosDTO = pedidoAplicacao.BuscarPedidos();
-                List<PedidoModel> pedidosModel = PedidoAdapter.PedidoDTOTOPedidoModel(pedidosDTO);
-                return Ok(pedidosModel);
+
+                if (pedidosDTO != null && pedidosDTO.Count > 0)
+                {
+                    List<PedidoModel> pedidosModel = PedidoAdapter.PedidoDTOTOPedidoModel(pedidosDTO);
+                    
+                    foreach (PedidoModel pedidoModel in pedidosModel)
+                    {
+                        foreach (ProdutoModel produtoModel in pedidoModel.ProdutosModel)
+                        {
+                            produtoModel.Preco += 10;
+
+                            pedidoModel.ValorTotal += produtoModel.Quantidade * produtoModel.Preco;
+
+                            /*
+                            using HttpClient client = new HttpClient();
+
+                            string url = $"GetPedidosUsuario/{produtoModel.ProdutoId}";
+
+                            HttpResponseMessage response = await client.GetAsync(url);
+
+                            if (response.IsSuccessStatusCode)
+                            {
+                                var options = new JsonSerializerOptions
+                                {
+                                    PropertyNameCaseInsensitive = true
+                                };
+                                string result = await response.Content.ReadAsStringAsync();
+                                ProdutoModel produto = JsonSerializer.Deserialize<ProdutoModel>(result, options);
+
+                                produtoModel.Preco = produto.Preco;
+
+                                pedidoModel.ValorTotal += produtoModel.Quantidade * produtoModel.Preco;
+                            }
+                            else
+                            {
+                                throw new ApplicationException();
+                            }*/
+                        }
+                    }
+                    
+                    return Ok(pedidosModel);
+                }
+                else
+                {
+                    throw new ApplicationException();
+                }
+                
             }
             catch (Exception)
             {
@@ -34,7 +83,7 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
             try
             {
@@ -44,8 +93,48 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
                 }
 
                 PedidoDTO pedidoDTO = pedidoAplicacao.BuscarPedido(id);
-                PedidoModel pedidoModel = PedidoAdapter.PedidoDTOTOPedidoModel(pedidoDTO);
-                return Ok(pedidoModel);
+
+                if (pedidoDTO != null)
+                {
+                    PedidoModel pedidoModel = PedidoAdapter.PedidoDTOTOPedidoModel(pedidoDTO);
+
+                    foreach (ProdutoModel produtoModel in pedidoModel.ProdutosModel)
+                    {
+                        produtoModel.Preco += 10;
+
+                        pedidoModel.ValorTotal += produtoModel.Quantidade * produtoModel.Preco;
+                        /*
+                        using HttpClient client = new HttpClient();
+
+                        string url = $"GetPedidosUsuario/{produtoModel.ProdutoId}";
+
+                        HttpResponseMessage response = await client.GetAsync(url);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var options = new JsonSerializerOptions
+                            {
+                                PropertyNameCaseInsensitive = true
+                            };
+                            string result = await response.Content.ReadAsStringAsync();
+                            ProdutoModel produto = JsonSerializer.Deserialize<ProdutoModel>(result, options);
+
+                            produtoModel.Preco = produto.Preco;
+
+                            pedidoModel.ValorTotal += produtoModel.Quantidade * produtoModel.Preco;
+                        }
+                        else
+                        {
+                            throw new ApplicationException();
+                        }*/
+                    }
+                    
+                    return Ok(pedidoModel);
+                }
+                else
+                {
+                    throw new ApplicationException();
+                }
             }
             catch (Exception)
             {
@@ -54,7 +143,7 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
         }
 
         [HttpGet("GetPedidosUsuario/{usuarioId}")]
-        public IActionResult GetPedidosUsuario(Guid usuarioId)
+        public async Task<IActionResult> GetPedidosUsuario(Guid usuarioId)
         {
             try
             {
@@ -64,8 +153,51 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
                 }
 
                 List<PedidoDTO> pedidosDTO = pedidoAplicacao.BuscarPedidosUsuario(usuarioId);
-                List<PedidoModel> pedidosModel = PedidoAdapter.PedidoDTOTOPedidoModel(pedidosDTO);
-                return Ok(pedidosModel);
+                
+                if (pedidosDTO != null && pedidosDTO.Count > 0)
+                {
+                    List<PedidoModel> pedidosModel = PedidoAdapter.PedidoDTOTOPedidoModel(pedidosDTO);
+                    
+                    foreach (PedidoModel pedidoModel in pedidosModel)
+                    {
+                        foreach (ProdutoModel produtoModel in pedidoModel.ProdutosModel)
+                        {
+                            produtoModel.Preco += 10;
+
+                            pedidoModel.ValorTotal += produtoModel.Quantidade * produtoModel.Preco;
+                            /*
+                            using HttpClient client = new HttpClient();
+
+                            string url = $"GetPedidosUsuario/{produtoModel.ProdutoId}";
+
+                            HttpResponseMessage response = await client.GetAsync(url);
+
+                            if (response.IsSuccessStatusCode)
+                            {
+                                var options = new JsonSerializerOptions
+                                {
+                                    PropertyNameCaseInsensitive = true
+                                };
+                                string result = await response.Content.ReadAsStringAsync();
+                                ProdutoModel produto = JsonSerializer.Deserialize<ProdutoModel>(result, options);
+
+                                produtoModel.Preco = produto.Preco;
+
+                                pedidoModel.ValorTotal += produtoModel.Quantidade * produtoModel.Preco;
+                            }
+                            else
+                            {
+                                throw new ApplicationException();
+                            }*/
+                        }
+                    }
+                    
+                    return Ok(pedidosModel);
+                }
+                else
+                {
+                    throw new ApplicationException();
+                }
             }
             catch (Exception)
             {
@@ -100,6 +232,36 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
             catch (Exception)
             {
                 return BadRequest("Erro ao atualizar o pedido");
+            }
+        }
+
+        [HttpPut("AtualizarStatusPedido")]
+        public IActionResult PutAtualizarStatusPedido(AtualizacaoPedidoModel atualizacaoPedidoModel)
+        {
+            try
+            {
+                AtualizacaoPedidoDTO atualizacaoPedidoDTO = AtualizacaoPedidoAdapter.AtualizacaoPedidoModelTOAtualizacaoPedidoDTO(atualizacaoPedidoModel);
+                pedidoAplicacao.AtualizarStatusPedido(atualizacaoPedidoDTO);
+                return Ok("Pedido atualizado com sucesso");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Erro ao atualizar o pedido");
+            }
+        }
+
+        [HttpPut("AtualizarEnderecoEntregaPedido")]
+        public IActionResult PutAtualizarEnderecoEntregaPedido(AtualizarEnderecoPedidoModel atualizarEnderecoPedidoModel)
+        {
+            try
+            {
+                AtualizarEnderecoPedidoDTO atualizarEnderecoPedidoDTO = AtualizarEnderecoPedidoAdapter.AtualizarEnderecoPedidoModelTOAtualizarEnderecoPedidoDTO(atualizarEnderecoPedidoModel);
+                pedidoAplicacao.AtualizarEnderecoEntregaPedido(atualizarEnderecoPedidoDTO);
+                return Ok("Endereço do pedido atualizado com sucesso");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Erro ao atualizar o endereço do pedido");
             }
         }
 
@@ -138,6 +300,25 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
             catch (Exception)
             {
                 return BadRequest("Erro ao excluir o pedido");
+            }
+        }
+
+        [HttpDelete("DeleteProdutoPedido/{pedidoId}/{produtoId}")]
+        public IActionResult DeleteProdutoPedido(Guid pedidoId, Guid produtoId)
+        {
+            try
+            {
+                if (produtoId == null || produtoId == Guid.Empty)
+                {
+                    throw new ApplicationException();
+                }
+
+                pedidoAplicacao.DeleteProdutoPedido(pedidoId, produtoId);
+                return Ok("Produto do pedido excluido com sucesso");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Erro ao excluir o produto do pedido");
             }
         }
     }

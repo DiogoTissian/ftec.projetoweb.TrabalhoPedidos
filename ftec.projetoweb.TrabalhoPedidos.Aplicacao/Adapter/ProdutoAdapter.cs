@@ -16,8 +16,7 @@ namespace ftec.projetoweb.TrabalhoPedidos.Aplicacao.Adapter
                     Id = produtoDTO.Id,
                     PedidoId = pedidoId,
                     ProdutoId = produtoDTO.ProdutoId,
-                    Quantidade = produtoDTO.Quantidade,
-                    Valor = produtoDTO.Valor
+                    Quantidade = produtoDTO.Quantidade
                 });
             }
 
@@ -35,8 +34,7 @@ namespace ftec.projetoweb.TrabalhoPedidos.Aplicacao.Adapter
                     Id = produto.Id,
                     PedidoId = pedidoId,
                     ProdutoId = produto.ProdutoId,
-                    Quantidade = produto.Quantidade,
-                    Valor = produto.Valor
+                    Quantidade = produto.Quantidade
                 });
             }
 

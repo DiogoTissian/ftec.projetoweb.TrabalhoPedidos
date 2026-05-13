@@ -6,19 +6,15 @@ using System.Threading.Tasks;
 
 namespace ftec.projetoweb.TrabalhoPedidos.Dominio.Entidades
 {
-    public class Produto
+    public class AtualizacaoPedido
     {
-        public Produto()
+        public AtualizacaoPedido()
         {
-            this.Id = Guid.Empty;
             this.PedidoId = Guid.Empty;
-            this.ProdutoId = Guid.Empty;
-            this.Quantidade = 0;
+            this.StatusPedido = 0;
         }
 
-        public Guid Id { get; set; }
         public Guid PedidoId { get; set; }
-        public Guid ProdutoId { get; set; }
-        public int Quantidade { get; set; }
+        public int StatusPedido { get; set; }
     }
 }
