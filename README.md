@@ -168,7 +168,7 @@ Envio:
 
 Resposta:
 ```
-Pedido inserido com sucesso
+Inserção Pedido - Pedido inserido com sucesso
 ```
 
 - PUT - api/Pedido - Atualiza um pedido no banco de dados (OK)
@@ -197,7 +197,7 @@ Ou atualizando somente o status do pedido
 
 Resposta:
 ```
-Pedido atualizado com sucesso
+Alteração Pedido - Pedido atualizado com sucesso
 ```
 
 - PUT - api/Pedido/AtualizarStatusPedido - Atualiza o status de um pedido no banco de dados (OK)
@@ -212,7 +212,7 @@ Envio:
 
 Resposta:
 ```
-Pedido atualizado com sucesso
+Atualizar Status Pedido - Pedido atualizado com sucesso
 ```
 
 - PUT - api/Pedido/AtualizarEnderecoEntregaPedido - Atualiza o endereço de entrega de um pedido no banco de dados (OK)
@@ -228,28 +228,28 @@ Envio:
 
 Resposta:
 ```
-Endereço do pedido atualizado com sucesso
+Atualizar Endereço Pedido - Endereço do pedido atualizado com sucesso
 ```
 
 - DELETE - api/Pedido/{id} - Deleta um pedido especificado no banco de dados (OK)
 
 Resposta:
 ```
-Pedido excluido com sucesso
+Deletar Pedido Específico - Pedido excluido com sucesso
 ```
 
 - DELETE - api/Pedido/DeletePedidos/{usuarioid} - Deleta todos os pedidos de um usuário especificado (OK)
 
 Resposta:
 ```
-Pedidos excluidos com sucesso
+Deletar Pedidos Usuário - Pedidos excluidos com sucesso
 ```
 
 - DELETE - api/Pedido/DeleteProdutoPedido/{pedidoId}/{produtoId} - Deleta um produto específico de um pedido específico (OK)
 
 Resposta:
 ```
-Produto do pedido excluido com sucesso
+Deletar Produto Pedido - Produto do pedido excluido com sucesso
 ```
 
 ### Banco de dados
