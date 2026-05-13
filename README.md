@@ -215,18 +215,14 @@ Resposta:
 Pedido atualizado com sucesso
 ```
 
-
-
-
-
----
-- PUT - api/Pedido/AtualizarEnderecoEntregaPedido - Atualiza o endereço de entrega de um pedido no banco de dados (FAZER)
+- PUT - api/Pedido/AtualizarEnderecoEntregaPedido - Atualiza o endereço de entrega de um pedido no banco de dados (OK)
 
 Envio:
 ```
 {
   "pedidoId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "statusPedido": 0
+  "cepEnderecoEntrega": "88888888",
+  "numeroEnderecoEntrega": "8888"
 }
 ```
 
@@ -234,12 +230,6 @@ Resposta:
 ```
 Endereço do pedido atualizado com sucesso
 ```
----
-
-
-
-
-
 
 - DELETE - api/Pedido/{id} - Deleta um pedido especificado no banco de dados (OK)
 
