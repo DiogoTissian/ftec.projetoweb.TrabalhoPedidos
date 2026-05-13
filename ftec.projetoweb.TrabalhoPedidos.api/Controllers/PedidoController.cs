@@ -37,11 +37,6 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
                     {
                         foreach (ProdutoModel produtoModel in pedidoModel.ProdutosModel)
                         {
-                            produtoModel.Preco += 10;
-
-                            pedidoModel.ValorTotal += produtoModel.Quantidade * produtoModel.Preco;
-
-                            /*
                             using HttpClient client = new HttpClient();
 
                             string url = $"GetPedidosUsuario/{produtoModel.ProdutoId}";
@@ -58,13 +53,12 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
                                 ProdutoModel produto = JsonSerializer.Deserialize<ProdutoModel>(result, options);
 
                                 produtoModel.Preco = produto.Preco;
-
                                 pedidoModel.ValorTotal += produtoModel.Quantidade * produtoModel.Preco;
                             }
                             else
                             {
-                                throw new ApplicationException();
-                            }*/
+                                return BadRequest("Buscar Pedidos - Erro ao consultar o preço do produto");
+                            }
                         }
                     }
                     
@@ -72,13 +66,13 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
                 }
                 else
                 {
-                    throw new ApplicationException();
+                    return BadRequest("Buscar Pedidos - Erro ao listar os pedidos");
                 }
                 
             }
             catch (Exception)
             {
-                return BadRequest("Erro ao listar os pedidos");
+                return BadRequest("Buscar Pedidos - Erro ao listar os pedidos");
             }
         }
 
@@ -87,85 +81,16 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
         {
             try
             {
-                if (id == null || id == Guid.Empty)
+                if (id != null && id != Guid.Empty)
                 {
-                    throw new ApplicationException();
-                }
+                    PedidoDTO pedidoDTO = pedidoAplicacao.BuscarPedido(id);
 
-                PedidoDTO pedidoDTO = pedidoAplicacao.BuscarPedido(id);
-
-                if (pedidoDTO != null)
-                {
-                    PedidoModel pedidoModel = PedidoAdapter.PedidoDTOTOPedidoModel(pedidoDTO);
-
-                    foreach (ProdutoModel produtoModel in pedidoModel.ProdutosModel)
+                    if (pedidoDTO != null)
                     {
-                        produtoModel.Preco += 10;
+                        PedidoModel pedidoModel = PedidoAdapter.PedidoDTOTOPedidoModel(pedidoDTO);
 
-                        pedidoModel.ValorTotal += produtoModel.Quantidade * produtoModel.Preco;
-                        /*
-                        using HttpClient client = new HttpClient();
-
-                        string url = $"GetPedidosUsuario/{produtoModel.ProdutoId}";
-
-                        HttpResponseMessage response = await client.GetAsync(url);
-
-                        if (response.IsSuccessStatusCode)
-                        {
-                            var options = new JsonSerializerOptions
-                            {
-                                PropertyNameCaseInsensitive = true
-                            };
-                            string result = await response.Content.ReadAsStringAsync();
-                            ProdutoModel produto = JsonSerializer.Deserialize<ProdutoModel>(result, options);
-
-                            produtoModel.Preco = produto.Preco;
-
-                            pedidoModel.ValorTotal += produtoModel.Quantidade * produtoModel.Preco;
-                        }
-                        else
-                        {
-                            throw new ApplicationException();
-                        }*/
-                    }
-                    
-                    return Ok(pedidoModel);
-                }
-                else
-                {
-                    throw new ApplicationException();
-                }
-            }
-            catch (Exception)
-            {
-                return BadRequest("Erro ao retornar o pedido pesquisado");
-            }
-        }
-
-        [HttpGet("GetPedidosUsuario/{usuarioId}")]
-        public async Task<IActionResult> GetPedidosUsuario(Guid usuarioId)
-        {
-            try
-            {
-                if (usuarioId == null || usuarioId == Guid.Empty)
-                {
-                    throw new ApplicationException();
-                }
-
-                List<PedidoDTO> pedidosDTO = pedidoAplicacao.BuscarPedidosUsuario(usuarioId);
-                
-                if (pedidosDTO != null && pedidosDTO.Count > 0)
-                {
-                    List<PedidoModel> pedidosModel = PedidoAdapter.PedidoDTOTOPedidoModel(pedidosDTO);
-                    
-                    foreach (PedidoModel pedidoModel in pedidosModel)
-                    {
                         foreach (ProdutoModel produtoModel in pedidoModel.ProdutosModel)
                         {
-                            produtoModel.Preco += 10;
-
-                            pedidoModel.ValorTotal += produtoModel.Quantidade * produtoModel.Preco;
-                            /*
                             using HttpClient client = new HttpClient();
 
                             string url = $"GetPedidosUsuario/{produtoModel.ProdutoId}";
@@ -182,26 +107,89 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
                                 ProdutoModel produto = JsonSerializer.Deserialize<ProdutoModel>(result, options);
 
                                 produtoModel.Preco = produto.Preco;
-
                                 pedidoModel.ValorTotal += produtoModel.Quantidade * produtoModel.Preco;
                             }
                             else
                             {
-                                throw new ApplicationException();
-                            }*/
+                                return BadRequest("Buscar Pedidos Específico - Erro ao consultar o preço do produto");
+                            }
                         }
+
+                        return Ok(pedidoModel);
                     }
-                    
-                    return Ok(pedidosModel);
+                    else
+                    {
+                        return BadRequest("Buscar Pedido Específico - Erro ao retornar o pedido pesquisado do banco de dados");
+                    }
                 }
                 else
                 {
-                    throw new ApplicationException();
+                    return BadRequest("Buscar Pedido Específico - Erro ao retornar o pedido pesquisado. Id do pedido informado inválido");
                 }
             }
             catch (Exception)
             {
-                return BadRequest("Erro ao retornar os pedidos do usuario pesquisado");
+                return BadRequest("Buscar Pedido Específico - Erro ao retornar o pedido pesquisado");
+            }
+        }
+
+        [HttpGet("GetPedidosUsuario/{usuarioId}")]
+        public async Task<IActionResult> GetPedidosUsuario(Guid usuarioId)
+        {
+            try
+            {
+                if (usuarioId != null && usuarioId != Guid.Empty)
+                {
+                    List<PedidoDTO> pedidosDTO = pedidoAplicacao.BuscarPedidosUsuario(usuarioId);
+
+                    if (pedidosDTO != null && pedidosDTO.Count > 0)
+                    {
+                        List<PedidoModel> pedidosModel = PedidoAdapter.PedidoDTOTOPedidoModel(pedidosDTO);
+
+                        foreach (PedidoModel pedidoModel in pedidosModel)
+                        {
+                            foreach (ProdutoModel produtoModel in pedidoModel.ProdutosModel)
+                            {
+                                using HttpClient client = new HttpClient();
+
+                                string url = $"GetPedidosUsuario/{produtoModel.ProdutoId}";
+
+                                HttpResponseMessage response = await client.GetAsync(url);
+
+                                if (response.IsSuccessStatusCode)
+                                {
+                                    var options = new JsonSerializerOptions
+                                    {
+                                        PropertyNameCaseInsensitive = true
+                                    };
+                                    string result = await response.Content.ReadAsStringAsync();
+                                    ProdutoModel produto = JsonSerializer.Deserialize<ProdutoModel>(result, options);
+
+                                    produtoModel.Preco = produto.Preco;
+                                    pedidoModel.ValorTotal += produtoModel.Quantidade * produtoModel.Preco;
+                                }
+                                else
+                                {
+                                    return BadRequest("Buscar Pedidos Usuário - Erro ao consultar o preço do produto");
+                                }
+                            }
+                        }
+
+                        return Ok(pedidosModel);
+                    }
+                    else
+                    {
+                        return BadRequest("Buscar Pedidos Usuário - Erro ao retornar os pedidos do usuário do banco de dados");
+                    }
+                }
+                else
+                {
+                    return BadRequest("Buscar Pedidos Usuário - Id do usuário inválido");
+                }
+            }
+            catch (Exception)
+            {
+                return BadRequest("Buscar Pedidos Usuário - Erro ao retornar os pedidos do usuario pesquisado");
             }
         }
 
@@ -210,13 +198,34 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
         {
             try
             {
-                PedidoDTO pedidoDTO = PedidoAdapter.PedidoModelTOPedidoDTO(pedidoModel);
-                pedidoAplicacao.AdicionarPedido(pedidoDTO);
-                return Ok("Pedido inserido com sucesso");
+                if (pedidoModel != null)
+                {
+                    if (pedidoModel.UsuarioId == null || pedidoModel.UsuarioId == Guid.Empty ||
+                        string.IsNullOrEmpty(pedidoModel.CEPEnderecoEntrega) || string.IsNullOrEmpty(pedidoModel.NumeroEnderecoEntrega))
+                    {
+                        return BadRequest("Inserção Pedido - Erro ao inserir o pedido. Dados recebidos inválidos");
+                    }
+
+                    foreach (ProdutoModel produto in pedidoModel.ProdutosModel)
+                    {
+                        if (produto.ProdutoId == null || produto.ProdutoId == Guid.Empty || produto.Quantidade <= 0)
+                        {
+                            return BadRequest("Inserção Pedido - Erro ao inserir o pedido. Dados do produto recebidos inválidos");
+                        }
+                    }
+
+                    PedidoDTO pedidoDTO = PedidoAdapter.PedidoModelTOPedidoDTO(pedidoModel);
+                    pedidoAplicacao.AdicionarPedido(pedidoDTO);
+                    return Ok("Inserção Pedido - Pedido inserido com sucesso");
+                }
+                else
+                {
+                    return BadRequest("Inserção Pedido - Erro ao inserir o pedido. Objeto recebido corrompido");
+                }
             }
             catch (Exception)
             {
-                return BadRequest("Erro ao inserir o pedido");
+                return BadRequest("Inserção Pedido - Erro ao inserir o pedido");
             }
         }
 
@@ -225,13 +234,34 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
         {
             try
             {
-                PedidoDTO pedidoDTO = PedidoAdapter.PedidoModelTOPedidoDTO(pedidoModel);
-                pedidoAplicacao.AlterarPedido(pedidoDTO);
-                return Ok("Pedido atualizado com sucesso");
+                if (pedidoModel != null)
+                {
+                    if (pedidoModel.Id == null || pedidoModel.Id == Guid.Empty ||
+                        pedidoModel.StatusPedido < -1 || pedidoModel.StatusPedido > 1)
+                    {
+                        return BadRequest("Alteração Pedido - Erro ao atualizar o pedido. Dados recebidos inválidos");
+                    }
+
+                    foreach (ProdutoModel produto in pedidoModel.ProdutosModel)
+                    {
+                        if (produto.ProdutoId == null || produto.ProdutoId == Guid.Empty || produto.Quantidade <= 0)
+                        {
+                            return BadRequest("Alteração Pedido - Erro ao atualizar o pedido. Dados do produto recebidos inválidos");
+                        }
+                    }
+
+                    PedidoDTO pedidoDTO = PedidoAdapter.PedidoModelTOPedidoDTO(pedidoModel);
+                    pedidoAplicacao.AlterarPedido(pedidoDTO);
+                    return Ok("Alteração Pedido - Pedido atualizado com sucesso");
+                }
+                else
+                {
+                    return BadRequest("Alteração Pedido - Erro ao atualizar o pedido. Objeto recebido corrompido");
+                }
             }
             catch (Exception)
             {
-                return BadRequest("Erro ao atualizar o pedido");
+                return BadRequest("Alteração Pedido - Erro ao atualizar o pedido");
             }
         }
 
@@ -240,13 +270,26 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
         {
             try
             {
-                AtualizacaoPedidoDTO atualizacaoPedidoDTO = AtualizacaoPedidoAdapter.AtualizacaoPedidoModelTOAtualizacaoPedidoDTO(atualizacaoPedidoModel);
-                pedidoAplicacao.AtualizarStatusPedido(atualizacaoPedidoDTO);
-                return Ok("Pedido atualizado com sucesso");
+                if (atualizacaoPedidoModel != null)
+                {
+                    if (atualizacaoPedidoModel.PedidoId == null || atualizacaoPedidoModel.PedidoId == Guid.Empty ||
+                        atualizacaoPedidoModel.StatusPedido < -1 || atualizacaoPedidoModel.StatusPedido > 1)
+                    {
+                        return BadRequest("Atualizar Status Pedido - Erro ao atualizar o status do pedido. Dados recebidos inválidos");
+                    }
+
+                    AtualizacaoPedidoDTO atualizacaoPedidoDTO = AtualizacaoPedidoAdapter.AtualizacaoPedidoModelTOAtualizacaoPedidoDTO(atualizacaoPedidoModel);
+                    pedidoAplicacao.AtualizarStatusPedido(atualizacaoPedidoDTO);
+                    return Ok("Atualizar Status Pedido - Pedido atualizado com sucesso");
+                }
+                else
+                {
+                    return BadRequest("Atualizar Status Pedido - Erro ao atualizar o status do pedido. Objeto recebido corrompido");
+                }
             }
             catch (Exception)
             {
-                return BadRequest("Erro ao atualizar o pedido");
+                return BadRequest("Atualizar Status Pedido - Erro ao atualizar o status do pedido");
             }
         }
 
@@ -255,9 +298,22 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
         {
             try
             {
-                AtualizarEnderecoPedidoDTO atualizarEnderecoPedidoDTO = AtualizarEnderecoPedidoAdapter.AtualizarEnderecoPedidoModelTOAtualizarEnderecoPedidoDTO(atualizarEnderecoPedidoModel);
-                pedidoAplicacao.AtualizarEnderecoEntregaPedido(atualizarEnderecoPedidoDTO);
-                return Ok("Endereço do pedido atualizado com sucesso");
+                if (atualizarEnderecoPedidoModel != null)
+                {
+                    if (atualizarEnderecoPedidoModel.PedidoId == null || atualizarEnderecoPedidoModel.PedidoId == Guid.Empty ||
+                        string.IsNullOrEmpty(atualizarEnderecoPedidoModel.CEPEnderecoEntrega) || string.IsNullOrEmpty(atualizarEnderecoPedidoModel.NumeroEnderecoEntrega))
+                    {
+                        return BadRequest("Atualizar Endereço Pedido - Dados recebidos inválidos");
+                    }
+
+                    AtualizarEnderecoPedidoDTO atualizarEnderecoPedidoDTO = AtualizarEnderecoPedidoAdapter.AtualizarEnderecoPedidoModelTOAtualizarEnderecoPedidoDTO(atualizarEnderecoPedidoModel);
+                    pedidoAplicacao.AtualizarEnderecoEntregaPedido(atualizarEnderecoPedidoDTO);
+                    return Ok("Atualizar Endereço Pedido - Endereço do pedido atualizado com sucesso");
+                }
+                else
+                {
+                    return BadRequest("Atualizar Endereço Pedido - Erro ao atualizar o endereço do pedido. Objeto recebido corrompido");
+                }
             }
             catch (Exception)
             {
@@ -270,17 +326,19 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
         {
             try
             {
-                if (id == null || id == Guid.Empty)
+                if (id != null && id != Guid.Empty)
                 {
-                    throw new ApplicationException();
+                    pedidoAplicacao.ExcluirPedido(id);
+                    return Ok("Deletar Pedido Específico - Pedido excluido com sucesso");
                 }
-
-                pedidoAplicacao.ExcluirPedido(id);
-                return Ok("Pedido excluido com sucesso");
+                else
+                {
+                    return BadRequest("Deletar Pedido Específico - Id do pedido inválido");
+                }
             }
             catch (Exception)
             {
-                return BadRequest("Erro ao excluir o pedido");
+                return BadRequest("Deletar Pedido Específico - Erro ao excluir o pedido");
             }
         }
 
@@ -289,17 +347,19 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
         {
             try
             {
-                if (usuarioid == null || usuarioid == Guid.Empty)
+                if (usuarioid != null && usuarioid != Guid.Empty)
                 {
-                    throw new ApplicationException();
+                    pedidoAplicacao.ExcluirPedidos(usuarioid);
+                    return Ok("Deletar Pedidos Usuário - Pedidos excluidos com sucesso");
                 }
-
-                pedidoAplicacao.ExcluirPedidos(usuarioid);
-                return Ok("Pedidos excluidos com sucesso");
+                else
+                {
+                    return BadRequest("Deletar Pedidos Usuário - Id do usuário inválido");
+                }
             }
             catch (Exception)
             {
-                return BadRequest("Erro ao excluir o pedido");
+                return BadRequest("Deletar Pedidos Usuário - Erro ao excluir o pedido");
             }
         }
 
@@ -308,17 +368,19 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
         {
             try
             {
-                if (produtoId == null || produtoId == Guid.Empty)
+                if (pedidoId != null && pedidoId != Guid.Empty && produtoId != null && produtoId != Guid.Empty)
                 {
-                    throw new ApplicationException();
+                    pedidoAplicacao.DeleteProdutoPedido(pedidoId, produtoId);
+                    return Ok("Deletar Produto Pedido - Produto do pedido excluido com sucesso");
                 }
-
-                pedidoAplicacao.DeleteProdutoPedido(pedidoId, produtoId);
-                return Ok("Produto do pedido excluido com sucesso");
+                else
+                {
+                    return BadRequest("Deletar Produto Pedido - Id do pedido ou produto inválido");
+                }
             }
             catch (Exception)
             {
-                return BadRequest("Erro ao excluir o produto do pedido");
+                return BadRequest("Deletar Produto Pedido - Erro ao excluir o produto do pedido");
             }
         }
     }

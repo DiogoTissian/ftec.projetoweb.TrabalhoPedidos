@@ -63,15 +63,8 @@ namespace ftec.projetoweb.TrabalhoPedidos.Aplicacao
         {
             try
             {
-                if (ValidadorPedido.ValidarPedido(pedidoDTO))
-                {
-                    Pedido pedido = PedidoAdapter.PedidoDTOTOPedido(pedidoDTO);
-                    pedidoRepositorio.Inserir(pedido);
-                }
-                else
-                {
-                    throw new ApplicationException();
-                }
+                Pedido pedido = PedidoAdapter.PedidoDTOTOPedido(pedidoDTO);
+                pedidoRepositorio.Inserir(pedido);
             }
             catch (Exception)
             {
@@ -83,15 +76,8 @@ namespace ftec.projetoweb.TrabalhoPedidos.Aplicacao
         {
             try
             {
-                if (ValidadorPedido.ValidarPedido(pedidoDTO))
-                {
-                    Pedido pedido = PedidoAdapter.PedidoDTOTOPedido(pedidoDTO);
-                    pedidoRepositorio.Alterar(pedido);
-                }
-                else
-                {
-                    throw new ApplicationException();
-                }
+                Pedido pedido = PedidoAdapter.PedidoDTOTOPedido(pedidoDTO);
+                pedidoRepositorio.Alterar(pedido);
             }
             catch (Exception)
             {
