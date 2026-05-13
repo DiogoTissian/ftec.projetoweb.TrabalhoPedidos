@@ -18,7 +18,8 @@ API construída em C# com o framework .NET Core
 | DataPedido  | DateTime  | Data em que o pedido foi atualizado pela última vez  |
 | StatusPedido  | int  | Indica o status do pedido: Pendente pagamento (0), Concluído (1) e Cancelado (-1) |
 | ValorTotal | decimal  | Calcula o valor total do pedido com seus itens |
-
+| CEPEnderecoEntrega | string  | CEP do endereço de entrega do pedido |
+| NumeroEnderecoEntrega | string  | Número do endereço de entrega do pedido |
 
 - Produto (Abstração)
   
@@ -31,114 +32,115 @@ API construída em C# com o framework .NET Core
 | Preco | decimal | Valor do produto unitário (consulta em microsserviço) |
 | Disponivel | bool | Indica se o produto está disponível para compra ou não |
 
+- AtualizacaoPedido
+
+| Cmpo  | Tipo | Descrição |
+| ------------- | ------------- | ------------- |
+| PedidoId | Guid | Id do pedido que será atualizado |
+| StatusPedido  | int  | Novo status do pedido (opcional) |
+| CEPEnderecoEntrega | string | Novo CEP do endereço de entrega do pedido (opcional) |
+| NumeroEnderecoEntrega | string | Novo número do endereço de entrega do pedido (opcional) |
+
 ### Endpoints
-- GET - api/Pedido - Lista todos os pedidos salvos no banco de dados
+- GET - api/Pedido - Lista todos os pedidos salvos no banco de dados (OK)
 
 Resposta:
 ```
 [
   {
-    "id": "1b456668-80ed-4000-b7a2-d201fd677af8",
-    "usuarioId": "3fa85f64-5717-4562-b3fc-2c963f66af77",
+    "id": "68353014-34b2-4859-8150-b7b3e0fd3d7c",
+    "usuarioId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     "produtosModel": [
       {
-        "id": "a27aed6a-23b6-4e9e-9772-b343d08b20b7",
-        "pedidoId": "1b456668-80ed-4000-b7a2-d201fd677af8",
+        "id": "3dd836fb-b036-42b4-bbd6-715d2e9d7a42",
+        "pedidoId": "68353014-34b2-4859-8150-b7b3e0fd3d7c",
         "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        "quantidade": 2,
-        "preco": 100,
-        "disponivel": true
-      },
-      {
-        "id": "a970f96f-a87e-48ba-9367-274dca9beb5e",
-        "pedidoId": "1b456668-80ed-4000-b7a2-d201fd677af8",
-        "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        "quantidade": 4,
-        "preco": 50,
-        "disponivel": true
+        "quantidade": 1,
+        "preco": 10,
+        "disponivel": false
       }
     ],
-    "dataPedido": "2026-05-11T00:00:00",
-    "statusPedido": 1,
-    "valorTotal": 400
+    "dataPedido": "2026-05-13T00:00:00",
+    "statusPedido": 0,
+    "valorTotal": 10,
+    "cepEnderecoEntrega": "00000000",
+    "numeroEnderecoEntrega": "0000"
   }
 ]
 ```
 
-- GET - api/Pedido/{id} - Lista o pedido do id especificado
+- GET - api/Pedido/{id} - Lista o pedido do id especificado (OK)
 
 Resposta:
 ```
 {
-  "id": "d4e24e9f-5a95-4054-b690-6fbbef901fa7",
-  "usuarioId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "id": "4d9bc71c-1220-408a-88a4-5cf494fd310c",
+  "usuarioId": "3fa85f64-5717-4562-b3fc-2c963f66af76",
   "produtosModel": [
     {
-      "id": "36e225f5-cf18-4bcf-9bd2-2a59d23d2e04",
-      "pedidoId": "d4e24e9f-5a95-4054-b690-6fbbef901fa7",
-      "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66a775",
+      "id": "39d03767-87e0-4b92-8bbe-d354bc91b9cd",
+      "pedidoId": "4d9bc71c-1220-408a-88a4-5cf494fd310c",
+      "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66a776",
       "quantidade": 2,
       "preco": 10,
-      "disponivel": true
+      "disponivel": false
     }
   ],
-  "dataPedido": "2026-05-11T00:00:00",
+  "dataPedido": "2026-05-13T00:00:00",
   "statusPedido": 0,
-  "valorTotal": 20
+  "valorTotal": 20,
+  "cepEnderecoEntrega": "88888888",
+  "numeroEnderecoEntrega": "8888"
 }
 ```
 
-- GET - api/Pedido/GetPedidosUsuario/{usuarioId} - Lista todos os pedidos do usuário especificado
+- GET - api/Pedido/GetPedidosUsuario/{usuarioId} - Lista todos os pedidos do usuário especificado (OK)
 
 Resposta:
 ```
 [
   {
-    "id": "1b456668-80ed-4000-b7a2-d201fd677af8",
-    "usuarioId": "3fa85f64-5717-4562-b3fc-2c963f66af77",
+    "id": "4d9bc71c-1220-408a-88a4-5cf494fd310c",
+    "usuarioId": "3fa85f64-5717-4562-b3fc-2c963f66af76",
     "produtosModel": [
       {
-        "id": "a27aed6a-23b6-4e9e-9772-b343d08b20b7",
-        "pedidoId": "1b456668-80ed-4000-b7a2-d201fd677af8",
-        "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "id": "39d03767-87e0-4b92-8bbe-d354bc91b9cd",
+        "pedidoId": "4d9bc71c-1220-408a-88a4-5cf494fd310c",
+        "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66a776",
         "quantidade": 2,
         "preco": 10,
-        "disponivel": true
-      },
-      {
-        "id": "a970f96f-a87e-48ba-9367-274dca9beb5e",
-        "pedidoId": "1b456668-80ed-4000-b7a2-d201fd677af8",
-        "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        "quantidade": 4,
-        "preco": 5,
-        "disponivel": true
+        "disponivel": false
       }
     ],
-    "dataPedido": "2026-05-11T00:00:00",
-    "statusPedido": 1,
-    "valorTotal": 40
+    "dataPedido": "2026-05-13T00:00:00",
+    "statusPedido": 0,
+    "valorTotal": 20,
+    "cepEnderecoEntrega": "88888888",
+    "numeroEnderecoEntrega": "8888"
   },
   {
-    "id": "6a65417d-4455-4be9-903d-4e5d8e58d95d",
-    "usuarioId": "3fa85f64-5717-4562-b3fc-2c963f66af77",
+    "id": "d835374e-1644-48e1-b934-d7a2da33cbaa",
+    "usuarioId": "3fa85f64-5717-4562-b3fc-2c963f66af76",
     "produtosModel": [
       {
-        "id": "254b18e2-2409-494e-a3a1-4fa5aa0f1952",
-        "pedidoId": "6a65417d-4455-4be9-903d-4e5d8e58d95d",
-        "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66a775",
-        "quantidade": 100,
-        "preco": 1,
-        "disponivel": true
+        "id": "28025c07-149c-43d9-ad58-4374c1d85f79",
+        "pedidoId": "d835374e-1644-48e1-b934-d7a2da33cbaa",
+        "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66a886",
+        "quantidade": 3,
+        "preco": 10,
+        "disponivel": false
       }
     ],
-    "dataPedido": "2026-05-11T00:00:00",
+    "dataPedido": "2026-05-13T00:00:00",
     "statusPedido": 0,
-    "valorTotal": 100
+    "valorTotal": 30,
+    "cepEnderecoEntrega": "88888888",
+    "numeroEnderecoEntrega": "8888"
   }
 ]
 ```
 
-- POST - api/Pedido - Insere um pedido no banco de dados
+- POST - api/Pedido - Insere um pedido no banco de dados (OK)
 
 Envio:
 ```
@@ -149,7 +151,9 @@ Envio:
       "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
       "quantidade": 1
     }
-  ]
+  ],
+  "cepEnderecoEntrega": "00000000",
+  "numeroEnderecoEntrega": "0000"
 }
 ```
 
@@ -158,10 +162,10 @@ Resposta:
 Pedido inserido com sucesso
 ```
 
-- PUT - api/Pedido - Atualiza um pedido no banco de dados
+- PUT - api/Pedido - Atualiza um pedido no banco de dados (OK)
 
 Envio:
-Obs.: O campo "id" é o id do pedido no banco de dados. Nessa atualização, podemos colocar os novos pedidos atualizados, ou não
+Obs.: O campo "id" é o id do pedido no banco de dados. Nessa atualização, podemos colocar os novos pedidos atualizados, substituindo os antigos, ou não
 ```
 {
   "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -187,14 +191,14 @@ Resposta:
 Pedido atualizado com sucesso
 ```
 
-- DELETE - api/Pedido/{id} - Deleta um pedido especificado no banco de dados
+- DELETE - api/Pedido/{id} - Deleta um pedido especificado no banco de dados (OK)
 
 Resposta:
 ```
 Pedido excluido com sucesso
 ```
 
-- DELETE - api/Pedido/DeletePedidos/{usuarioid} - Deleta todos os pedidos de um usuário especificado
+- DELETE - api/Pedido/DeletePedidos/{usuarioid} - Deleta todos os pedidos de um usuário especificado (OK)
 
 Resposta:
 ```
