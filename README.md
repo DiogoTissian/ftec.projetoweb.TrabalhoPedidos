@@ -193,6 +193,32 @@ Resposta:
 Pedido atualizado com sucesso
 ```
 
+- PUT - api/Pedido/AtualizarStatusPedido - Atualiza o status de um pedido no banco de dados (OK)
+
+Envio:
+```
+{
+  "pedidoId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "statusPedido": 0
+}
+```
+
+Resposta:
+```
+Pedido atualizado com sucesso
+```
+
+
+
+
+
+
+
+
+
+
+
+
 - DELETE - api/Pedido/{id} - Deleta um pedido especificado no banco de dados (OK)
 
 Resposta:
@@ -205,6 +231,13 @@ Pedido excluido com sucesso
 Resposta:
 ```
 Pedidos excluidos com sucesso
+```
+
+- DELETE - api/Pedido/DeleteProdutoPedido/{pedidoId}/{produtoId} - Deleta um produto específico de um pedido específico (OK)
+
+Resposta:
+```
+Produto do pedido excluido com sucesso
 ```
 
 ### Banco de dados
