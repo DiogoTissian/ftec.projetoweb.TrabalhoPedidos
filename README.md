@@ -214,14 +214,16 @@ Pedidos excluidos com sucesso
 CREATE TABLE public.pedido (
 	id varchar NOT NULL,
 	usuarioid varchar NULL,
-	datapedido date NULL
-  statuspedido integer null
+	datapedido date NULL,
+	statuspedido int4 NULL,
+	cependerecoentrega varchar NULL,
+	numeroenderecoentrega varchar NULL
 );
 
 CREATE TABLE public.produto_pedido (
-  id varchar NULL,
 	pedidoid varchar NOT NULL,
+	id varchar NULL,
 	produtoid varchar NULL,
-	quantidade integer NULL
+	quantidade varchar NULL
 );
 ```
