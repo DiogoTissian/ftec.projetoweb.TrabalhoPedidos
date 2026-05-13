@@ -21,6 +21,7 @@ API construída em C# com o framework .NET Core
 | CEPEnderecoEntrega | string  | CEP do endereço de entrega do pedido |
 | NumeroEnderecoEntrega | string  | Número do endereço de entrega do pedido |
 
+
 - Produto (Abstração)
   
 | Cmpo  | Tipo | Descrição |
@@ -31,6 +32,7 @@ API construída em C# com o framework .NET Core
 | Quantidade | int | Quantidade escolhida para o produto |
 | Preco | decimal | Valor do produto unitário (consulta em microsserviço) |
 | Disponivel | bool | Indica se o produto está disponível para compra ou não |
+
 
 - AtualizacaoPedido
 
