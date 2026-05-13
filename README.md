@@ -39,9 +39,16 @@ API construída em C# com o framework .NET Core
 | Cmpo  | Tipo | Descrição |
 | ------------- | ------------- | ------------- |
 | PedidoId | Guid | Id do pedido que será atualizado |
-| StatusPedido  | int  | Novo status do pedido (opcional) |
-| CEPEnderecoEntrega | string | Novo CEP do endereço de entrega do pedido (opcional) |
-| NumeroEnderecoEntrega | string | Novo número do endereço de entrega do pedido (opcional) |
+| StatusPedido  | int  | Novo status do pedido |
+
+
+- AtualizarEnderecoPedido
+
+| Cmpo  | Tipo | Descrição |
+| ------------- | ------------- | ------------- |
+| PedidoId | Guid | Id do pedido que será atualizado o endereço |
+| CEPEnderecoEntrega | string | Novo CEP do endereço de entrega do pedido |
+| NumeroEnderecoEntrega | string | Novo número do endereço de entrega do pedido |
 
 ### Endpoints
 - GET - api/Pedido - Lista todos os pedidos salvos no banco de dados (OK)
@@ -212,7 +219,22 @@ Pedido atualizado com sucesso
 
 
 
+---
+- PUT - api/Pedido/AtualizarEnderecoEntregaPedido - Atualiza o endereço de entrega de um pedido no banco de dados (FAZER)
 
+Envio:
+```
+{
+  "pedidoId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "statusPedido": 0
+}
+```
+
+Resposta:
+```
+Endereço do pedido atualizado com sucesso
+```
+---
 
 
 
