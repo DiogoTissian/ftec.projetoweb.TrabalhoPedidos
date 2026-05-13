@@ -51,6 +51,7 @@ API construída em C# com o framework .NET Core
 | NumeroEnderecoEntrega | string | Novo número do endereço de entrega do pedido |
 
 ### Endpoints
+#### GET
 - GET - api/Pedido - Lista todos os pedidos salvos no banco de dados (OK)
 
 Resposta:
