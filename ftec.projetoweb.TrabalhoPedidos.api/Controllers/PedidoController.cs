@@ -6,6 +6,7 @@ using ftec.projetoweb.TrabalhoPedidos.Dominio.Entidades;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using static System.Net.WebRequestMethods;
 
 namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
 {
@@ -39,7 +40,7 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
                         {
                             using HttpClient client = new HttpClient();
 
-                            string url = $"GetPedidosUsuario/{produtoModel.ProdutoId}";
+                            string url = $"{this.url_api_produto}/obtemPorId/{produtoModel.ProdutoId}";
 
                             HttpResponseMessage response = await client.GetAsync(url);
 
@@ -93,7 +94,7 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
                         {
                             using HttpClient client = new HttpClient();
 
-                            string url = $"GetPedidosUsuario/{produtoModel.ProdutoId}";
+                            string url = $"{this.url_api_produto}/obtemPorId/{produtoModel.ProdutoId}";
 
                             HttpResponseMessage response = await client.GetAsync(url);
 
@@ -152,7 +153,7 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
                             {
                                 using HttpClient client = new HttpClient();
 
-                                string url = $"GetPedidosUsuario/{produtoModel.ProdutoId}";
+                                string url = $"{this.url_api_produto}/obtemPorId/{produtoModel.ProdutoId}";
 
                                 HttpResponseMessage response = await client.GetAsync(url);
 
