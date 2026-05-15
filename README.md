@@ -32,7 +32,7 @@ API construída em C# com o framework .NET Core
 | Quantidade | int | Quantidade escolhida para o produto |
 | Preco | decimal | Valor do produto unitário (consulta em microsserviço) |
 | Disponivel | bool | Indica se o produto está disponível para compra ou não |
-
+| Excluido | bool | Indica se o produto está excluido no banco de dados ou não |
 
 - AtualizacaoPedido
 
@@ -66,7 +66,8 @@ Resposta:
         "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "quantidade": 1,
         "preco": 10,
-        "disponivel": false
+        "disponivel": false,
+		"excluido": false
       }
     ],
     "dataPedido": "2026-05-13T00:00:00",
@@ -92,7 +93,8 @@ Resposta:
       "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66a776",
       "quantidade": 2,
       "preco": 10,
-      "disponivel": false
+      "disponivel": false,
+      "excluido": false
     }
   ],
   "dataPedido": "2026-05-13T00:00:00",
@@ -118,7 +120,8 @@ Resposta:
         "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66a776",
         "quantidade": 2,
         "preco": 10,
-        "disponivel": false
+        "disponivel": false,
+        "excluido": false
       }
     ],
     "dataPedido": "2026-05-13T00:00:00",
@@ -137,7 +140,8 @@ Resposta:
         "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66a886",
         "quantidade": 3,
         "preco": 10,
-        "disponivel": false
+        "disponivel": false,
+        "excluido": false
       }
     ],
     "dataPedido": "2026-05-13T00:00:00",
