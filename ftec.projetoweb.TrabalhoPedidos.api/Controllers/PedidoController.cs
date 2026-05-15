@@ -5,6 +5,7 @@ using ftec.projetoweb.TrabalhoPedidos.Aplicacao.DTO;
 using ftec.projetoweb.TrabalhoPedidos.Dominio.Entidades;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Text.Json;
 using static System.Net.WebRequestMethods;
 
@@ -50,11 +51,23 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
                                 {
                                     PropertyNameCaseInsensitive = true
                                 };
-                                string result = await response.Content.ReadAsStringAsync();
-                                ProdutoModel produto = JsonSerializer.Deserialize<ProdutoModel>(result, options);
+                                string result1 = await response.Content.ReadAsStringAsync();
 
-                                produtoModel.Preco = produto.Preco;
-                                pedidoModel.ValorTotal += produtoModel.Quantidade * produtoModel.Preco;
+                                if (!string.IsNullOrEmpty(result1))
+                                {
+                                    dynamic result = JsonConvert.DeserializeObject(result1);
+
+                                    if (result != null && result.data != null)
+                                    {
+                                        ProdutoModel produto = JsonConvert.DeserializeObject<ProdutoModel>(Convert.ToString(result.data));
+
+                                        if (produto != null)
+                                        {
+                                            produtoModel.Preco = produto.Preco;
+                                            pedidoModel.ValorTotal += produtoModel.Quantidade * produtoModel.Preco;
+                                        }
+                                    }
+                                }
                             }
                             else
                             {
@@ -104,11 +117,23 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
                                 {
                                     PropertyNameCaseInsensitive = true
                                 };
-                                string result = await response.Content.ReadAsStringAsync();
-                                ProdutoModel produto = JsonSerializer.Deserialize<ProdutoModel>(result, options);
+                                string result1 = await response.Content.ReadAsStringAsync();
 
-                                produtoModel.Preco = produto.Preco;
-                                pedidoModel.ValorTotal += produtoModel.Quantidade * produtoModel.Preco;
+                                if (!string.IsNullOrEmpty(result1))
+                                {
+                                    dynamic result = JsonConvert.DeserializeObject(result1);
+
+                                    if (result != null && result.data != null)
+                                    {
+                                        ProdutoModel produto = JsonConvert.DeserializeObject<ProdutoModel>(Convert.ToString(result.data));
+
+                                        if (produto != null)
+                                        {
+                                            produtoModel.Preco = produto.Preco;
+                                            pedidoModel.ValorTotal += produtoModel.Quantidade * produtoModel.Preco;
+                                        }
+                                    }
+                                }
                             }
                             else
                             {
@@ -163,11 +188,23 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
                                     {
                                         PropertyNameCaseInsensitive = true
                                     };
-                                    string result = await response.Content.ReadAsStringAsync();
-                                    ProdutoModel produto = JsonSerializer.Deserialize<ProdutoModel>(result, options);
+                                    string result1 = await response.Content.ReadAsStringAsync();
 
-                                    produtoModel.Preco = produto.Preco;
-                                    pedidoModel.ValorTotal += produtoModel.Quantidade * produtoModel.Preco;
+                                    if (!string.IsNullOrEmpty(result1))
+                                    {
+                                        dynamic result = JsonConvert.DeserializeObject(result1);
+
+                                        if (result != null && result.data != null)
+                                        {
+                                            ProdutoModel produto = JsonConvert.DeserializeObject<ProdutoModel>(Convert.ToString(result.data));
+
+                                            if (produto != null)
+                                            {
+                                                produtoModel.Preco = produto.Preco;
+                                                pedidoModel.ValorTotal += produtoModel.Quantidade * produtoModel.Preco;
+                                            }
+                                        }
+                                    }
                                 }
                                 else
                                 {
@@ -195,7 +232,7 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(PedidoModel pedidoModel)
+        public IActionResult Post([FromBody]PedidoModel pedidoModel)
         {
             try
             {
@@ -231,7 +268,7 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
         }
 
         [HttpPut]
-        public IActionResult Put(PedidoModel pedidoModel)
+        public IActionResult Put([FromBody] PedidoModel pedidoModel)
         {
             try
             {
@@ -267,7 +304,7 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
         }
 
         [HttpPut("AtualizarStatusPedido")]
-        public IActionResult PutAtualizarStatusPedido(AtualizacaoPedidoModel atualizacaoPedidoModel)
+        public IActionResult PutAtualizarStatusPedido([FromBody] AtualizacaoPedidoModel atualizacaoPedidoModel)
         {
             try
             {
@@ -295,7 +332,7 @@ namespace ftec.projetoweb.TrabalhoPedidos.api.Controllers
         }
 
         [HttpPut("AtualizarEnderecoEntregaPedido")]
-        public IActionResult PutAtualizarEnderecoEntregaPedido(AtualizarEnderecoPedidoModel atualizarEnderecoPedidoModel)
+        public IActionResult PutAtualizarEnderecoEntregaPedido([FromBody] AtualizarEnderecoPedidoModel atualizarEnderecoPedidoModel)
         {
             try
             {
